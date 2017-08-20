@@ -1,0 +1,7 @@
+[
+    { "owner_id": 1002, "dog_name": "Chase" },
+    { "owner_id": 1000, "dog_name": "Dash" },
+    { "owner_id": 1000, "dog_name": "Lucy" },
+    { "owner_id": 1001, "dog_name": "Latte" },
+    { "owner_id": 1002, "dog_name": "Zeke" }
+]
