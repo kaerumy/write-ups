@@ -1,0 +1,61 @@
+$ mongoimport -d example -c dogs --file dogs-lines.json 
+connected to: 127.0.0.1
+Sat Aug 19 15:16:27.984 imported 5 objects
+
+$ mongoimport -d example -c dogs --file dogs-list.json 
+connected to: 127.0.0.1
+Sat Aug 19 15:18:09.254 exception:BSON representation of supplied JSON is too large: code FailedToParse: FailedToParse: Expecting '{': offset:0
+...
+Sat Aug 19 15:18:09.255 check 0 0
+Sat Aug 19 15:18:09.255 imported 0 objects
+Sat Aug 19 15:18:09.255 ERROR: encountered 22 error(s)s
+
+$ mongoimport -d example -c dogs --file dogs-list.json --jsonArray
+connected to: 127.0.0.1
+Sat Aug 19 15:19:37.841 imported 5 objects
+
+$ mongo
+MongoDB shell version: 2.4.9
+connecting to: test
+> show databases
+example	0.0625GB
+local	0.03125GB
+testdb	0.0625GB
+> use example
+switched to db example
+> show collections
+dogs
+system.indexes
+> db.dogs.count()
+5
+> db.dogs.find()
+{ "_id" : ObjectId("5997e5cb20fb7111d368dff3"), "owner_id" : 1002, "dog_name" : "Chase" }
+{ "_id" : ObjectId("5997e5cb20fb7111d368dff4"), "owner_id" : 1000, "dog_name" : "Dash" }
+{ "_id" : ObjectId("5997e5cb20fb7111d368dff5"), "owner_id" : 1000, "dog_name" : "Lucy" }
+{ "_id" : ObjectId("5997e5cb20fb7111d368dff6"), "owner_id" : 1001, "dog_name" : "Latte" }
+{ "_id" : ObjectId("5997e5cb20fb7111d368dff7"), "owner_id" : 1002, "dog_name" : "Zeke" }
+
+$ mongoimport -d example -c dogs --file dogs-nested-list.json 
+connected to: 127.0.0.1
+Sat Aug 19 15:34:54.819 exception:BSON representation of supplied JSON is too large: code FailedToParse: FailedToParse: Field name expected: offset:1
+...
+Sat Aug 19 15:34:54.820 check 0 0
+Sat Aug 19 15:34:54.820 imported 0 objects
+Sat Aug 19 15:34:54.820 ERROR: encountered 25 error(s)s
+
+$ mongoimport -d example -c dogs --file dogs-nested-list.json --jsonArray
+connected to: 127.0.0.1
+Sat Aug 19 15:35:43.120 imported 1 objects
+
+$ mongo
+MongoDB shell version: 2.4.9
+connecting to: test
+> use example
+switched to db example
+> db.dogs.find()
+{ "_id" : ObjectId("5997e68920fb7111d368dffd"), "owner_id" : 1002, "dog_name" : "Chase" }
+{ "_id" : ObjectId("5997e68920fb7111d368dffe"), "owner_id" : 1000, "dog_name" : "Dash" }
+{ "_id" : ObjectId("5997e68920fb7111d368dfff"), "owner_id" : 1000, "dog_name" : "Lucy" }
+{ "_id" : ObjectId("5997e68920fb7111d368e000"), "owner_id" : 1001, "dog_name" : "Latte" }
+{ "_id" : ObjectId("5997e68920fb7111d368e001"), "owner_id" : 1002, "dog_name" : "Zeke" }
+{ "_id" : ObjectId("599865bc20fb7111d368e003"), "listing_date" : "2017-08-19", "listing" : [ 	{ 	"owner_id" : 1002, 	"dog_name" : "Chase" }, 	{ 	"owner_id" : 1000, 	"dog_name" : "Dash" }, 	{ 	"owner_id" : 1000, 	"dog_name" : "Lucy" }, 	{ 	"owner_id" : 1001, 	"dog_name" : "Latte" }, 	{ 	"owner_id" : 1002, 	"dog_name" : "Zeke" } ] }
